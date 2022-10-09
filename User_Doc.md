@@ -8,10 +8,28 @@
 
 ## 2. Initial setups
 
+### 2.1 Shell configuration
+
+We use `oh-my-zsh` under `zsh` shell for a better experience of command line. Functions like auto suggestion, command auto completion are installed. For your first login, copy following command:
+
+```shell
+
+
+```
+
+Then quit the the server by command
+ ```shell
+ exit
+ ``` 
+ 
+ Re-login the server and you will see the related change. 
 
 ### 2.1 Login without password
 
-### 
+
+### 2.3 (Optional) VScode integration:
+
+VScode is 
 
 ## 3. Modules
 
