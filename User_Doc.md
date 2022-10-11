@@ -11,15 +11,15 @@ Linux tends to be a highly reliable and secure system than any other operating s
 
 As stated, you need use command to access the server. So, command line tools is needed. This is the software **on your own computer** that help us to linke to the server. 
 
-*  Windows user: search a software called `Powerline` in your PC
+*  Windows user: search a software called `PowerShell` in your PC
 
 *  Mac/Linux user: search a software called `Terminal` in your PC
 
-The appearance of this kind of software will look exactly like that in movies: a blue(win) or (black) box that allow you to type commands. Then, to access server, type (note to change things in <> into your own):
+The appearance of this kind of software will look exactly like that in movies: a black box that allow you to type commands into it. Then, to access server, type (note to change things in <> into your own):
 ```shell
-ssh <YOUR UST USERNAME(i.e. wgouaa) >@ee4e147.ece.ust.hk
+ssh <YOUR UST USERNAME (i.e. wgouaa) >@ee4e147.ece.ust.hk
 ```
-Press `Enter` , then enter your password same as accessing the school email system, you will then be logged into the system.
+Similar syntax is used for accessing other servers in our group. Enter your password same as accessing the school email system, and you will logged in.
 
 A quick note on the above command is as follow: in Linux, all command will start with the **software** to be used, and then with **arguments** for that software. Here, `ssh` is the software used and following is the arguments. For each software, always try:
 
@@ -77,20 +77,45 @@ Then you will see the related change. If you do not like the theme preset, you c
 ``` shell
 source $HOME/.zshrc
 ```
-Again to allow change.
+Again to allow change. Basically this step tell the server to "save" that change permanatly into `.zshrc` file. You may notice that, if you use `ls` command, you actually do not see this file. This is because the `.` tell linux to hide that document. Similar stratiges are used for folders. To see all the things in a certain directory, you can try `ls -a` of `la` in short. If you go into this file, you may notice that several other setups are in it. This file is the file to be executed each time you log in, so the changes in here will be used each time. 
+
+
+
 
 ### 1.2 Login without password
 
-Allow logging in without entering password is a very neat solution for every morning. 
+Allow logging in without entering password is a very neat solution for every morning. The basic step here include generate a `key` in your own device and then store the key in the server. You can follow the following steps:
 
 
-### 2.3 (Recommend) VScode integration:
+* For Window setup
 
-`VScode` have a very nice plugin that can help you interact with server and directly set (nearly) everything in one software. After 
+    - To generate the key, you need to use `PowerShell` and run `ssh-keygen -t rsa`. Type `Enter` for all questions. Then, a key will be generated in your PC at `C:\Users\<username>\.ssh\`. Go into that folder, you will see a file called `id_rsa.pub`. Open that text file and copy the whole key. 
 
-## 2. Modules
+    - Then, you need to edit the accesibility of file `id_rsa.pub`. Right click on that file and enter `Properties/属性（R)`. Go into `Security/安全`. You need to delect all other users except yourself,and set the accessof yourself as read and write only.
 
-In this server, we use `environment-modules` to manage all pacakages/environments installed. It can be viewed as a centrialized software managment system for all things you may need. Main reason for using this tools is to resolve the confict between different version of softwares. 
+    - To send the key to the server, log into the server and create necessary files called `authorized_keys`:
+    ```shell
+    mkdir .ssh && cd .ssh && touch authorized_keys
+    ```
+    - After create that file, you need to paste the whole key into that file and save the file.
+
+* For Mac setup, open `Terminal`
+
+    - To generate the key, run `ssh-keygen -t rsa`.
+    - To send the key to server, run `ssh-copy-id  <YOUR UST USERNAME >@ee4e147.ece.ust.hk`
+
+Then, you need to log into the server again by password. And run following codes:
+
+``` shell
+chmod -R 700 .ssh/
+sudo chmod 600 .ssh/authorized_keys
+```
+
+Log out the server and you will be all set. 
+
+## 2. Modules and environment management
+
+In this server, we use `environment-modules` to manage all pacakages/software installed, and use `Anaconda3` to management the scientific computing environment. 
 
 To load/unload a module that you need, say `matlab`, simply type in command line:
 
@@ -109,12 +134,14 @@ module whatis <MODULE NAME>
 ```
 
 
-## 3. Python environment setup:
+## 3. Environment setup:
 
-Python environment
+Python anaconda environment
 
 
-## 4. 
+## 4. VScode integration:
+
+`VScode` have a very nice plugin that can help you interact with server and directly set (nearly) everything in one software. After 
 
 
 
