@@ -61,7 +61,7 @@ And will leads you back to where we start (use `pwd` to confirm it). The above p
 #### 0.3 Softwares for better server access:
 Except for command line tools, there are bunch of softwares that can help you to interact with server:
 
-* `VScode`: will be introduced later
+* `VScode`: A really hand software for editing. you can refer to this [website](https://code.visualstudio.com/docs/remote/ssh) for setup details
 * `MobaXterm`: A windows tool for better server access, also can link GUI between server and you PC (i.e. open matlab in your PC but run code on server)
 * `FileZilla`: Specialized in file transfer between server and pc
 
@@ -112,16 +112,16 @@ Allow logging in without entering password is a very neat solution for every mor
 * For Mac setup, open `Terminal`
 
     - To generate the key, run `ssh-keygen -t rsa`.
-    - To send the key to server, run `ssh-copy-id  <YOUR UST USERNAME >@ee4e147.ece.ust.hk`
+    - To send the key to server, run `ssh-copy-id  ~/.ssh/id_rsa.pub <YOUR UST USERNAME >@ee4e147.ece.ust.hk`
 
 Then, you need to log into the server again by password. And run following codes:
 
 ``` shell
-chmod -R 700 .ssh/
-sudo chmod 600 .ssh/authorized_keys
+chmod 700 .ssh/
+chmod 600 .ssh/authorized_keysd
 ```
 
-Log out the server and you will be all set. 
+Log out the server and you will be all set.  A quick note here is that `chmod` command can help you management the access to folders/documents (you create). The number (i.e. 700/600) is the dummy coding of access. Refer to this [calculator](https://chmod-calculator.com/) for detail. 
 
 ## 2. Modules and environment management
 
@@ -164,21 +164,10 @@ Currently, we use a centralize `Anaconda3` to manage all the core things about e
     * To recover/copy other environment to your own directory, you need to create an empty environment first. Then, you can run `conda env update --name <your new environment> --f <old envirooment .yaml file>` to recover the whole conda environment.
 
 
+## 3. Jupyter Notebook and SoS notebook:
 
-## 3. VScode integration:
+The environment `notebook` installed in the py3. 
 
-`VScode` have a very nice plugin that can help you interact with server and directly set (nearly) everything in one software. After 
-
-
-## 4. Jupyter Notebook and SoS notebook:
-
-
-``` shell
-python usr/local/MATLAB/R2021b/extern/engines/python/setup.py install
-```
 
 # Appendix
 
-## A. More about Linux:
-
-Linux is  a 
