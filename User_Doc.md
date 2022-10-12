@@ -153,11 +153,15 @@ Currently, we use a centralize `Anaconda3` to manage all the core things about e
 
 * (Pre-users/Users want to do environment transfer) Archive exsiting environment and remove your anaconda/miniconda completly: Though you may have a python environment, it is recommended to achive that and transfer it to the new system. To do so, 
 
-    * Archive environments:
+    * Archive environments: you need to enter your own environment first, say `env_old`. Run `conda env export > <where to save>/env_old.yaml`. This will generate a yaml file, which can be used to transfer your environment.
 
-    * Remove conda completely:
+    * Remove conda completely: Two things need to be done. Firstly, you need to remove the anaconda/miniconda folder in your directory. Secondly, you need to edit you `.bashrc` file and remove the chunk that related to conda (something between `>>> conda initialize >>>` and `<<< conda initialize <<<`)
 
 * Create new python environment: 
+    * To load python, you need to use `module load py3` first to load the anaconda in server. Note that this step will not leads you to a specific environment. Also. **NEVER** do any computation without enter into a specific environment. 
+    * To create and use a new environment: after correctly laod py3, you need to create or enter a enviornment. To create, you need to use `conda env create -n <name of environment>` or `conda env create -p <path of environment>`. To enter an environment, please use `source activate <env>`. Please **NEVER USE/RUN `conda activate`** as it may permanently contaminate you `$PATH`.
+    * To quit python completely, first you need to use `source daactivate` (Again **NEVER USE/RUN `conda deactivate`**), in first place to quit your current environment. Then, you can use `module unload py3` to quit python and set yourself to original. A lazy method is to directly shut down your connection and re-open a new terminal for other works.
+    * To recover/copy other environment to your own directory, you need to create an empty environment first. Then, you can run `conda env update --name <your new environment> --f <old envirooment .yaml file>` to recover the whole conda environment.
 
 
 
@@ -168,6 +172,10 @@ Currently, we use a centralize `Anaconda3` to manage all the core things about e
 
 ## 4. Jupyter Notebook and SoS notebook:
 
+
+``` shell
+python usr/local/MATLAB/R2021b/extern/engines/python/setup.py install
+```
 
 # Appendix
 
