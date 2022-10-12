@@ -166,8 +166,26 @@ Currently, we use a centralize `Anaconda3` to manage all the core things about e
 
 ## 3. Jupyter Notebook and SoS notebook:
 
-The environment `notebook` installed in the py3. 
+The whole environment `notebook` installed in py3 module. Complete documentation of SoS can be found [here](https://vatlab.github.io/sos-docs/). A demo of that notebook is saved in `/home/Data`. To begin, you need to copy the environment in base to your own directory (just follow steps in 3). On installing, you may see something like pip fail and you can just ignore it. After that, you can copy the demo of that notebook, enter the notebook environment and type `jupyter lab`. Then you can try to run each chunk to see if there is any error. Note that kernels are note that fast on initial running. If you see something wrong on running, just try to restart kernels and notebook first and try to run it again. If some errors persist (mainly will be in matlab), please contact admin.
 
 
 # Appendix
 
+## A.1 Path in Linux:
+Path management is the main reason for all setup in the Linux. Consider you are looking for something in a very big pool, it will be very helpful if you someone can give you some direction. The Path in linux is the index to tell the computer where the software is. To see what path you have, type
+```shell 
+echo $PATH
+```
+In a **newly opend terminal**. You may see something like `/usr/sbin:/usr/bin:/sbin:/bin`. These are the most important path that store common commands like `ls, cd ...`. The logic of linux is: when you are giving some command, say, `python`, it will start from the first path and search the ideal thing. So, in this setting, python 2.7.17 under linux will be open. Then, if you load `py3` module and run `echo $PATH`, you will see two additional path of `anaconda` will be load. In this situation, if you open python again, you will open python 3.9.12 under anaconda. Further, if you activate some environment, you path will be further change (and new pythons, if you specified python version, will be used). You can also try to deactivate environment and unload py3 to see what happened. 
+
+In some case, we may have two packages that share same name or may cause conflict if they are running together. To overcome this and to make the separation of different environment as far as possible, we use `module` to manage all the softwares in this sever. 
+
+## A.2 `~/.bashrc` and `~/.zshrc`
+
+The user interface you see (and changed user interface in section 1.1) is related to `shell`. You can imagine shell as a task (to communicate with sever) and it have  different brunchs (like word and wps, all of them have the task "document processing"). The default shell is called `bash` in Linux, and in section 1.1, we changed that shell to `zsh` for more extentions (like auto suggestion and auto completion) and customizations. This is to say that you need to edit **`~/.zshrc` only** for your future configurations.
+
+The listed two files, `~/.bashrc` and `~/.zshrc` is the two file that control bash shell and zsh shell respectively. They are the two executable that will be run **initially** once you open the shell. That is to say, all the things listed in related `.xxxrc` file will be pre-exsit once you log in. That is to say, if you specify a path in this file, you will not be able to remove it easily (see below). In A.1, we have seen that we can use module to change the path dynamically, so none of them are written in `.xxxrc` file. Upon setup, the only thing in `~/.zshrc` file is the location of the software module.
+
+Utilize this file is very tricky. If you have previous experience of `anaconda`, you may notice that something start and end with `>>> conda initialize >>>` and `<<< conda initialize <<<` is in your `.bashrc` file. It is telling the system to address of python managed by anaconda to be there once you login. We do not recommend this setup for a more clean path. If you do have some personal customization, say load a plugin, you can write in this file and your customization will be there for future login.
+
+Further, if you do really want to make some change and let it happend now, you can firstly edit `~/.zshrc` file. After you save it, there will be no changes happened. You need to run `source ~/.zshrc` that tell Linux to stage your change. 
