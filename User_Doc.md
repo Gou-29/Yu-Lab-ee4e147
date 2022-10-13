@@ -163,10 +163,11 @@ Currently, we use a centralize `Anaconda3` to manage all the core things about e
     * To quit python completely, first you need to use `source daactivate` (Again **NEVER USE/RUN `conda deactivate`**), in first place to quit your current environment. Then, you can use `module unload py3` to quit python and set yourself to original. A lazy method is to directly shut down your connection and re-open a new terminal for other works.
     * To recover/copy other environment to your own directory, you need to create an empty environment first. Then, you can run `conda env update --name <your new environment> --f <old envirooment .yaml file>` to recover the whole conda environment.
 
-
 ## 3. Jupyter Notebook and SoS notebook:
 
 The whole environment `notebook` installed in py3 module. Complete documentation of SoS can be found [here](https://vatlab.github.io/sos-docs/). A demo of that notebook is saved in `/home/Data`. To begin, you need to copy the environment in base to your own directory (just follow steps in 3). **Do not** try to run it in the `Data` directory. When copy the environment, you may see something like pip fail and you can just ignore it. After that, you can copy the demo of that notebook, enter the notebook environment and type `jupyter lab`. Then you can try to run each chunk to see if there is any error. Note that kernels are note that fast on initial running. If you see something wrong on running, just try to restart kernels and notebook first and try to run it again. If some errors persist (mainly will be in matlab), please contact admin.
+
+When using jupyter lab and SoS, you may also want to add an conda environment as a kernel. You can follow [this site](https://stackoverflow.com/questions/53004311/how-to-add-conda-environment-to-jupyter-lab) for install. 
 
 
 
