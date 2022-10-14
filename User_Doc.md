@@ -149,19 +149,21 @@ module whatis <MODULE NAME>
 
 `Python` is the most unstable thing that may cause conflict. A general advice is to run each thing, include different python environments, in separate terminals. It is also to say that only load 1 modules if the is possible. 
 
-Currently, we use a centralize `Anaconda3` to manage all the core things about environment. In other word, you will just use `conda` and some other basic functions. **All your environments will be set on your own directory and separated with others**. 
+Currently, we use a centralize `Anaconda3` to manage all the core things about environment. In other word, you will just use `conda` and some other basic functions. **All your environments will be set on your own directory and separated with others**. Pre-users/Users want to do environment transfer need to start from section a) to c), and new users can directly start from section b).
 
-* (Pre-users/Users want to do environment transfer) Archive exsiting environment and remove your anaconda/miniconda completly: Though you may have a python environment, it is recommended to achive that and transfer it to the new system. To do so, 
+* a) Archive exsiting environment and remove your anaconda/miniconda completly in ee4e147: Though you may have a python environment, it is recommended to achive that and transfer it to the new system. To do so, 
 
     * Archive environments: you need to enter your own environment first, say `env_old`. Run `conda env export > <where to save>/env_old.yaml`. This will generate a yaml file, which can be used to transfer your environment.
 
-    * Remove conda completely: Two things need to be done. Firstly, you need to remove the anaconda/miniconda folder in your directory. Secondly, you need to edit you `.bashrc` file and remove the chunk that related to conda (something between `>>> conda initialize >>>` and `<<< conda initialize <<<`)
+    * Remove conda completely: Two things need to be done. Firstly, you need to remove the anaconda/miniconda folder in your directory. Secondly, you need to edit you `.bashrc` file and remove the chunk that related to conda (between `>>> conda initialize >>>` and `<<< conda initialize <<<`)
 
-* Create new python environment: 
-    * To load python, you need to use `module load py3` first to load the anaconda in server. Note that this step will not leads you to a specific environment. Also. **NEVER** do any computation without enter into a specific environment. 
-    * To create and use a new environment: after correctly laod py3, you need to create or enter a enviornment. To create, you need to use `conda env create -n <name of environment>` or `conda env create -p <path of environment>`. To enter an environment, please use `source activate <env>`. Please **NEVER USE/RUN `conda activate`** as it may permanently contaminate you `$PATH`.
-    * To quit python completely, first you need to use `source daactivate` (Again **NEVER USE/RUN `conda deactivate`**), in first place to quit your current environment. Then, you can use `module unload py3` to quit python and set yourself to original. A lazy method is to directly shut down your connection and re-open a new terminal for other works.
-    * To recover/copy other environment to your own directory, you need to create an empty environment first. Then, you can run `conda env update --name <your new environment> --f <old envirooment .yaml file>` to recover the whole conda environment.
+* b) Centralized conda initialization: 
+    * To load python in servere, you need to use `module load py3`. Verify that you load the correct python environment by run `which python`. Expected output will be `/usr/local/anaconda3/bin/python`
+    * After that, run `conda init zsh` and re-login into the server. Again, verify python environment by run `which python`. Expected output will be `/usr/local/anaconda3/bin/python`. This means that you do not need to load py3 module afterward. If you cannot set environment properly, please contact admin
+
+* c) Environments
+    * To enter an environment, please use `conda activate <env>`. To quit that environment, use `conda deactivate`. **NEVER** do any computation without enter into a specific environment. 
+    * To recover/copy other environment to your own directory, you need to **create an empty environment** first. Then, you can run `conda env update --name <your new environment name> --f <old environment .yaml file>` to recover the whole conda environment.
 
 ## 3. Jupyter Notebook and SoS notebook:
 
@@ -178,7 +180,9 @@ Path management is the main reason for all setup in the Linux. Consider you are 
 ```shell 
 echo $PATH
 ```
-In a **newly opend terminal**. You may see something like `/usr/sbin:/usr/bin:/sbin:/bin`. These are the most important path that store common commands like `ls, cd ...`. The logic of linux is: when you are giving some command, say, `python`, it will start from the first path and search the ideal thing. So, in this setting, python 2.7.17 under linux will be open. Then, if you load `py3` module and run `echo $PATH`, you will see two additional path of `anaconda` will be load. In this situation, if you open python again, you will open python 3.9.12 under anaconda. Further, if you activate some environment, you path will be further change (and new pythons, if you specified python version, will be used). You can also try to deactivate environment and unload py3 to see what happened. 
+In a **newly opend terminal**. You may see something like `/usr/sbin:/usr/bin:/sbin:/bin`. These are the most important path that store common commands like `ls, cd ...`. The logic of linux is: when you are giving some command. it will start from the first path and search the ideal thing. 
+
+You can do a simple experiment on `python` as follow. Firstly, you need to enter `~/.zshrc` and remove thing betwteen  `>>> conda initialize >>>` and `<<< conda initialize <<<`. After that, re-login. Under this setting, if you type `python`, python 2.7.17 under linux will be open. Then, if you load `py3` module and run `echo $PATH`, you will see two additional path of `anaconda` will be load. In this situation, if you open python again, you will open python 3.9.12 under anaconda. Further, if you activate some environment, you path will be further change (and new pythons, if you specified python version, will be used). You can also try to deactivate environment and unload py3 to see what happened. 
 
 In some case, we may have two packages that share same name or may cause conflict if they are running together. To overcome this and to make the separation of different environment as far as possible, we use `module` to manage all the softwares in this sever. 
 
@@ -188,6 +192,6 @@ The user interface you see (and changed user interface in section 1.1) is relate
 
 The listed two files, `~/.bashrc` and `~/.zshrc` is the two file that control bash shell and zsh shell respectively. They are the two executable that will be run **initially** once you open the shell. That is to say, all the things listed in related `.xxxrc` file will be pre-exsit once you log in. That is to say, if you specify a path in this file, you will not be able to remove it easily (see below). In A.1, we have seen that we can use module to change the path dynamically, so none of them are written in `.xxxrc` file. Upon setup, the only thing in `~/.zshrc` file is the location of the software module.
 
-Utilize this file is very tricky. If you have previous experience of `anaconda`, you may notice that something start and end with `>>> conda initialize >>>` and `<<< conda initialize <<<` is in your `.bashrc` file. It is telling the system to address of python managed by anaconda to be there once you login. We do not recommend this setup for a more clean path. If you do have some personal customization, say load a plugin, you can write in this file and your customization will be there for future login.
+Utilize this file is very tricky. If you have previous experience of `anaconda`, you may notice that something start and end with `>>> conda initialize >>>` and `<<< conda initialize <<<` is in your `.bashrc` file. It is telling the system to address of python managed by anaconda to be there once you login. 
 
 Further, if you do really want to make some change and let it happend now, you can firstly edit `~/.zshrc` file. After you save it, there will be no changes happened. You need to run `source ~/.zshrc` that tell Linux to stage your change. 
